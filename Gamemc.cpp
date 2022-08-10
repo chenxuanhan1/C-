@@ -24,7 +24,7 @@ int armor2defense[10]={0,3,4,3,5,7,8};
 int armor3defense[10]={0,2,3,3,4,6,7};
 int armor4defense[10]={0,1,2,1,3,3,4}; 
 //0空手 
-bool nether=false,ender=false;//地狱门&末地门 建造/发现 
+bool nether=false,ender=false;//地狱门&末地门 建造/发现 5
 bool dead=false,defend=false,blessing=false;//敌人死亡 防御状态 notch祝福 
 bool crafttable=false,furnace=false;//工作台 熔炉 
 bool undeadattack=false;//亡灵入侵 
@@ -32,14 +32,17 @@ int badguy=0,weaponcheck=0,blesscold=0;
 int task1=0;//task1:旅行家 收集10橡木 
 int choose;//工具 
 long long bag[1000]={0,100};//背包 
-string itemname[1000]={"","橡木","丛林木","针叶木","绯红菌柄","橡木木板","从林木木板","针叶木木板","绯红木板","工作台","木棍","木剑","木斧","木稿","圆石","石剑","石斧","石稿","熔炉","煤炭","铁矿石","铁锭","铁剑","铁斧","铁镐","铁头盔","铁胸甲","铁护腿","铁靴子","护盾","弓","金矿石","金锭","金剑","金斧","金稿","苹果","金苹果","线","金头盔","金胸甲","金护腿","金靴子"};//物品名 
+string itemname[1000]={"","橡木","丛林木","针叶木","绯红菌柄","橡木木板","从林木木板","针叶木木板","绯红木板","工作台","木棍","木剑","木斧","木稿","圆石","石剑","石斧","石稿","熔炉","煤炭","铁矿石","铁锭","铁剑","铁斧","铁镐","铁头盔","铁胸甲","铁护腿","铁靴子","护盾","弓","金矿石","金锭","金剑","金斧","金稿","苹果","金苹果","线","金头盔","金胸甲","金护腿","金靴子","青金石","钻石","钻石块","钻石苹果","锻造台","远古残骸","下界合金碎片","下界合金锭"};//物品名 
 /*物品编号：
 1橡木 2从林木 3针叶木 4绯红菌柄 5橡木木板 6从林木木板 7针叶木木板 8绯红木板 
 9工作台 10木棍 11木剑 12木斧 13木稿 14圆石 15石剑 16石斧 
 17石稿 18熔炉 19煤炭 20铁矿石 21铁锭 22铁剑 23铁斧 24铁镐
 25铁头盔 26铁胸甲 27铁护腿 28铁靴子 29护盾 30弓 31金矿石 32金锭
 33金剑 34金斧 35金稿 36苹果 37金苹果 38线 39金头盔 40金胸甲 
-41金护腿 42金靴子  
+41金护腿 42金靴子 43青金石 44钻石 45钻石剑 46钻石斧 47钻石镐 48钻石头盔
+49钻石胸甲 50钻石护腿 51钻石靴子 52钻石块 54钻石苹果 55锻造台 56远古残骸
+57下界合金碎片 58下界合金锭 59下界合金剑 60下界合金斧 61下界合金稿 62下界合金头盔 63下界合金胸甲 64下界合金护腿
+65下界合金靴子 
 */ 
 int levelup(int xp){
 	if(xp<level*100){
@@ -824,6 +827,7 @@ void create(){//合成
 	}
 } 
 void fight(string MN,int MH,int MA,int Mrand,int MD,int MS,int dis,int Adis,int xp,int Mmoney){//战斗 敌人名 敌人生命 敌人最小攻击 浮动值 敌人防御 敌人速度 当前距离 敌人攻击距离 经验值 绿宝石 
+	dead=false;
 	bool back=true;
 	system("cls");
 	while(!dead){
@@ -933,13 +937,13 @@ void fight(string MN,int MH,int MA,int Mrand,int MD,int MS,int dis,int Adis,int 
 			cout<<"获得经验 "<<xp<<" 点"<<endl; 
 			experience+=xp;
 			Sleep(1000);
-			cout<<"你升了 "<<levelup(experience)<<" 级！"<<endl;
+			if(levelup(experience)>0) cout<<"你升了 "<<levelup(experience)<<" 级！"<<endl;
 			level+=levelup(experience);
 			Sleep(500);
 			cout<<"当前等级："<<level<<endl;
          	dead=true;
 			Sleep(1000);
-			cout<<"你获得 "<<Mmoney<<" 颗绿宝石"<<endl;
+			if(Mmoney>0) cout<<"你获得 "<<Mmoney<<" 颗绿宝石"<<endl;
 			money+=Mmoney;
 			Sleep(2000);
 			system("cls");
@@ -1053,6 +1057,11 @@ void shop(string place){//商店
 }
 void explore(string place){//探索 
 	if(place=="村庄"){		
+		if(undeadattack){
+			system("cls");
+			enemyattack();
+			return;
+		}
 		switch(rand()%10){
 			case 0:
 			cout<<"你遇到了铁傀儡！"<<endl;
@@ -1599,7 +1608,7 @@ void explore(string place){//探索
 		}
 	}
 	if(place=="平原"){
-		switch(rand()%1){
+		switch(rand()%3){
 			case 0:
 				if(task1==0){
 					cout<<"你遇见了一个旅行家！"<<endl;
@@ -1630,13 +1639,14 @@ void explore(string place){//探索
 						credit-=15;
 						Sleep(1500); 
 					}else{
+						int add=1+rand()%4 
 						cout<<"你找到了旅行家"<<endl;
 						Sleep(1500);
 						cout<<"你交给了旅行家10个橡木！"<<endl;
 						bag[1]-=10; 
 						Sleep(1500);
-						cout<<"旅行家十分高兴，给了你3颗绿宝石作为奖励！"<<endl;
-						money+=3;
+						cout<<"旅行家十分高兴，给了你 "<<add<<" 颗绿宝石作为奖励！"<<endl;
+						money+=add;
 						Sleep(1500);
 						cout<<"任务已完成！"<<endl;
 						task1=0;
@@ -1646,9 +1656,36 @@ void explore(string place){//探索
 				}
 			break;
 			case 1:
+				cout<<"你遇见了一头牛！"<<endl;
+				cout<<"0，离开  1，击杀"<<endl;
+				cin>>choose;
+				if(choose==1){
+					fight("牛",20,2,1,10,3,10,1,50,0);
+					if(dead){
+						cout<<"获得 2 个生牛肉！"<<endl;
+					}
+				}else return;
+			break;
+			case 2:
+				cout<<"你遇见了一只羊！"<<endl;
+				cout<<"0，离开  1，击杀"<<endl;
+				cin>>choose;
+				if(choose==1){
+					fight("羊",20,1,1,0,3,10,1,50,0);
+					if(dead){
+						cout<<"获得 2 个生羊肉！"<<endl;
+					}
+				}else return;
 			break;	
 		}
 	}
+	if(place=="森林")
+	if(place=="洞穴")
+	if(place=="沙漠")
+	if(place=="丛林")
+	if(place=="雪地")
+	if(place=="地狱")
+	if(place=="末地")
 	system("cls");
 	return;
 }
@@ -2073,7 +2110,7 @@ void dig(string place){
 				cout<<"探索矿洞中..."<<endl;	
 				Sleep(8000+rand()%12000);
 				int add;
-				switch(1+rand()%3){
+				switch(1+rand()%5){
 					case 1://发现煤炭 
 						add=8+1+rand()%8;
 						cout<<"你发现了 "<<add<<" 块煤炭！"<<endl;
@@ -2222,6 +2259,99 @@ void dig(string place){
 							cout<<"挖掘完毕！获得 "<<itemname[31]<<" "<<add<<" 个！"<<endl;
 							bag[31]+=add;
 							cout<<"当前有 "<<itemname[31]<<" "<<bag[31]<<" 个！"<<endl;
+							Sleep(2000);
+							dig(place); 
+						}else dig(place);
+					break;
+					case 4://发现青金石矿 
+						int add=6+1+rand()%6;
+						cout<<"你发现了 "<<add<<" 块青金石！"<<endl;
+						Sleep(1000);
+						cout<<"0，离开  1，挖掘"<<endl;
+						cin>>choose;
+						if(choose==1){
+							system("cls");
+							if(tool2<2&&tool2!=3){
+								cout<<"当前稿子无法挖掘此矿石！"<<endl;
+								Sleep(2000);
+								dig(place);
+							}
+							switch(tool2){
+								case 2:
+									for(int i=1;i<=20;i++){
+										cout<<"已完成"<<i*5<<"%"<<endl; 
+										Sleep(200*add);
+										system("cls");
+									}	
+								break;
+								case 4:
+									for(int i=1;i<=20;i++){
+										cout<<"已完成"<<i*5<<"%"<<endl; 
+										Sleep(160*add);
+										system("cls");
+									}	
+								break;
+								case 5:
+									for(int i=1;i<=20;i++){
+										cout<<"已完成"<<i*5<<"%"<<endl; 
+										Sleep(140*add);
+										system("cls");
+									}
+								break;
+								case 6:
+									for(int i=1;i<=20;i++){
+										cout<<"已完成"<<i*5<<"%"<<endl; 
+										Sleep(125*add);
+										system("cls");
+									}
+								break; 
+							}
+							cout<<"挖掘完毕！获得 "<<itemname[43]<<" "<<add<<" 个！"<<endl;
+							bag[43]+=add;
+							cout<<"当前有 "<<itemname[43]<<" "<<bag[43]<<" 个！"<<endl;
+							Sleep(2000);
+							dig(place); 
+						}else dig(place);
+					break;
+					case 5://发现钻石 
+						int add=2+1+rand()%4;
+						cout<<"你发现了 "<<add<<" 块钻石！"<<endl;
+						Sleep(1000);
+						cout<<"0，离开  1，挖掘"<<endl;
+						cin>>choose;
+						if(choose==1){
+							system("cls");
+							if(tool2<4){
+								cout<<"当前稿子无法挖掘此矿石！"<<endl;
+								Sleep(2000);
+								dig(place);
+							}
+							switch(tool2){
+								case 4:
+									for(int i=1;i<=20;i++){
+										cout<<"已完成"<<i*5<<"%"<<endl; 
+										Sleep(240*add);
+										system("cls");
+									}	
+								break;
+								case 5:
+									for(int i=1;i<=20;i++){
+										cout<<"已完成"<<i*5<<"%"<<endl; 
+										Sleep(200*add);
+										system("cls");
+									}
+								break;
+								case 6:
+									for(int i=1;i<=20;i++){
+										cout<<"已完成"<<i*5<<"%"<<endl; 
+										Sleep(170*add);
+										system("cls");
+									}
+								break; 
+							}
+							cout<<"挖掘完毕！获得 "<<itemname[44]<<" "<<add<<" 个！"<<endl;
+							bag[44]+=add;
+							cout<<"当前有 "<<itemname[44]<<" "<<bag[44]<<" 个！"<<endl;
 							Sleep(2000);
 							dig(place); 
 						}else dig(place);
@@ -3045,7 +3175,124 @@ void build(){//建造
 	}
 }
 void enemyattack(){
-	
+	if(undeadattack){
+		cout<<"你看见又有一些亡灵生物在攻击村庄，不过有铁傀儡的保护，这些小批的亡灵只是送死。"<<endl;
+		Sleep(1500);
+		cout<<"这次似乎亡灵来的数量比较多...等等！"<<endl;
+		Sleep(1500);
+		cout<<"你定睛一看，城墙外，是黑压压的亡灵大军..."<<endl;
+		Sleep(2000);
+		system("cls");
+		Sleep(1500);
+		cout<<"潮水般的亡灵疯狂的冲撞着城墙，很快城墙便倒塌了..."<<endl;
+		Sleep(1500);
+		cout<<"亡灵大军入侵！！！"<<endl; 
+		Sleep(2000);
+		cout<<"一只僵尸向你扑来！"<<endl;
+		Sleep(2000);
+		fight("僵尸",20,3,3,0,2,5,2,80,1);
+		if(dead){
+			dead=false;
+			credit+=2;
+			cout<<"你击败了僵尸后，又一只僵尸向你冲来！！"<<endl;
+			Sleep(2000);
+			fight("僵尸",20,3,2,10,2,5,2,80,1);
+			if(dead){
+				dead=false;
+				credit+=2;
+				cout<<"你好不容易击杀了僵尸后，远处射来一根暗箭！"<<endl;
+				Sleep(2000);
+				fight("骷髅",20,2,1,0,1,15,12,100,2);
+				if(dead){
+					credit+=5;
+					Sleep(2000);
+					cout<<"几根骨头落下，骷髅落败。"<<endl;
+					Sleep(2000);
+					cout<<"你原地休息了一会，恢复了10点生命值！"<<endl;
+					if(health<=maxhealth-10) health+=10;
+					Sleep(2000);
+					cout<<"但正当你休息时，一把锐利的刀刺向了你的喉咙----"<<endl;
+					Sleep(2000);
+					system("cls");
+					Sleep(1000);
+					cout<<"Blackbone."<<endl;
+					Sleep(1000);
+					cout<<"“杀了我众多亡灵同胞，吾必将血债血偿！”"<<endl;
+					Sleep(1000); 
+					cout<<"顷刻间，血骨之刃便来到了你的面前！"<<endl;
+					Sleep(2000);
+					fight("Blackbone之影",60,6,2,20,4,10,3,800,10);
+					if(dead){
+						credit+=10;
+						cout<<"你将剑插入Blackbone的心脏中，Blackbone消失了..."<<endl;
+						Sleep(1500);
+						cout<<"刚刚你击杀的，只不过是Blackbone的分身！"<<endl;
+						Sleep(1500);
+						cout<<"但亡灵大军停止了进攻，他们已经处于劣势。"<<endl;
+						Sleep(1500);
+						cout<<"你守护了村庄！"<<endl;
+						Sleep(2000); 
+						cout<<"你获得奖励： 经验 500 点！ 绿宝石 15 颗！"<<endl;
+						experience+=500;
+						if(levelup(experience)>0)cout<<"你升了 "levelup(experience)<<" 级！";
+						level+=levelup(exxperience);
+						money+=15;
+						Sleep(1000);
+						cout<<"你回复了所有生命值。"<<endl;
+						health=maxhealth;
+						system("cls");
+					}
+				}else{
+					cout<<"你倒在地上，渐渐失去了知觉..."<<endl;
+					Sleep(2000);
+					system("cls");
+					Sleep(2000);
+					cout<<"当你醒来时，你正躺在村庄旅馆里..."<<endl;
+					Sleep(1000);
+					cout<<"你与亡灵英勇作战，店主为你恢复了生命。"<<endl;
+					health=maxhealth;
+					Sleep(2000);
+					undeadattack=false;
+					return;
+				}
+			}else{
+				cout<<"你倒在地上，渐渐失去了知觉..."<<endl;
+				Sleep(2000);
+				system("cls");
+				Sleep(2000);
+				cout<<"当你醒来时，你的绿宝石已散落不见..."<<endl;
+				if(money<10){
+					cout<<"你失去了所有绿宝石！"<<endl;
+					money=0;
+				}else{
+					cout<<"你失去了 10 颗绿宝石！"<<endl;
+					money-=10;
+				}
+				cout<<"你还有 "<<money<<" 颗绿宝石..."<<endl;
+				Sleep(2000);
+				undeadattack=false;
+				return;
+			}
+		}else{
+			cout<<"你倒在地上，渐渐失去了知觉..."<<endl;
+			Sleep(2000);
+			system("cls");
+			Sleep(2000);
+			cout<<"当你醒来时，你的绿宝石已散落不见..."<<endl;
+			if(money<10){
+				cout<<"你失去了所有绿宝石！"<<endl;
+				money=0;
+			}else{
+				cout<<"你失去了 10 颗绿宝石！"<<endl;
+				money-=10;
+			}
+			cout<<"你还有 "<<money<<" 颗绿宝石..."<<endl;
+			Sleep(2000);
+			undeadattack=false;
+			return; 
+		}
+	}
+	return;
 }
 int main(){
 	srand(time(0));
@@ -3102,6 +3349,7 @@ int main(){
 		cout<<"速度："<<speed<<endl;
 		cout<<"绿宝石："<<money<<endl;
 		cout<<"等级："<<level<<" 经验："<<experience<<"/"<<level*100<<endl; 
+		if(undeadattack) cout<<"你有一种不祥的预感...也许你该去村庄冒险看看。"<<endl;
 		cout<<"-----------------------------------" <<endl; 
 		cout<<"你要做什么？"<<endl;
 		cout<<"1，冒险  2，商店  3，背包  4，挖矿  5，砍树  6，前进  7，合成  8，建造  9，装备"<<endl;
