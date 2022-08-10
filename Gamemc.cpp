@@ -19,6 +19,10 @@ string armor1name[10]={"无","皮革头盔","锁链头盔","金头盔","铁头盔","钻石头盔","
 string armor2name[10]={"无","皮革胸甲","锁链胸甲","金胸甲","铁胸甲","钻石胸甲","下界合金胸甲"};
 string armor3name[10]={"无","皮革护腿","锁链护腿","金护腿","铁护腿","钻石护腿","下界合金护腿"};
 string armor4name[10]={"无","皮革靴子","锁链靴子","金靴子","铁靴子","钻石靴子","下界合金靴子"};
+int armor1defense[10]={0,1,2,2,3,4,5};
+int armor2defense[10]={0,3,4,3,5,7,8};
+int armor3defense[10]={0,2,3,3,4,6,7};
+int armor4defense[10]={0,1,2,1,3,3,4}; 
 //0空手 
 bool nether=false,ender=false;//地狱门&末地门 建造/发现 
 bool dead=false,defend=false,blessing=false;//敌人死亡 防御状态 notch祝福 
@@ -933,7 +937,7 @@ void fight(string MN,int MH,int MA,int Mrand,int MD,int MS,int dis,int Adis,int 
 			level+=levelup(experience);
 			Sleep(500);
 			cout<<"当前等级："<<level<<endl;
-         	 dead=true;
+         	dead=true;
 			Sleep(1000);
 			cout<<"你获得 "<<Mmoney<<" 颗绿宝石"<<endl;
 			money+=Mmoney;
@@ -1016,6 +1020,7 @@ void fight(string MN,int MH,int MA,int Mrand,int MD,int MS,int dis,int Adis,int 
 				blessing=false;
 				cout<<"你回复25%生命值，继续战斗！"<<endl; 
 				Sleep(2000);
+				system("cls");
 			}else{
 				cout<<"你死了！"<<endl;
 				place="村庄"; 
@@ -1056,6 +1061,11 @@ void explore(string place){//探索
 			if(choose==1){
 				fight("铁傀儡",100,8,6,40,2,10,3,500,5);
 				credit-=20;
+				if(dead){
+					dead=false;
+					cout<<"获得 2 个铁锭！"<<endl;
+					bag[21]+=2;
+				}
 			}else{
 				cout<<"你远离了铁傀儡"<<endl; 
 				Sleep(1000);
@@ -1337,6 +1347,9 @@ void explore(string place){//探索
 						Sleep(2000);
 						fight("铁傀儡",100,8,6,40,2,10,3,200,5);
 						if(dead){
+							dead=false;
+							cout<<"获得 2 个铁锭！"<<endl;
+							bag[21]+=2;
 							cout<<"你踹开了铁傀儡，连忙跑走了"<<endl; 
 							Sleep(2000);
 						}else{
@@ -1416,6 +1429,11 @@ void explore(string place){//探索
 			if(choose==1){
 				fight("铁傀儡",100,8,6,40,2,10,3,500,5);
 				credit-=20;
+				if(dead){
+					dead=false;
+					cout<<"获得 2 个铁锭！"<<endl;
+					bag[21]+=2;
+				}
 			}else{
 				cout<<"你远离了铁傀儡"<<endl; 
 				Sleep(1000);
@@ -1583,7 +1601,7 @@ void explore(string place){//探索
 	if(place=="平原"){
 		switch(rand()%1){
 			case 0:
-				if(task==0){
+				if(task1==0){
 					cout<<"你遇见了一个旅行家！"<<endl;
 					Sleep(1500);
 					cout<<"旅行家对你说，他身上没有木头了，你能不能给他带来10个橡木？"<<endl;
@@ -1627,6 +1645,8 @@ void explore(string place){//探索
 					}
 				}
 			break;
+			case 1:
+			break;	
 		}
 	}
 	system("cls");
@@ -2208,7 +2228,7 @@ void dig(string place){
 					break;	
 				}
 			}
-		}
+		}else return;
 	}
 }
 void jvqing(){//剧情输出 
@@ -2876,6 +2896,13 @@ void weapon(){//装备
 							Sleep(2000);
 							weapon();
 						break;
+						case 22:
+							weapon1=3;
+							bag[22]-=1;
+							cout<<"已装备 "<<weapon1name[weapon1]<<" ！"<<endl;
+							Sleep(2000);
+							weapon();
+						break;
 						case 33:
 							weapon1=4;
 							bag[33]-=1;
@@ -2910,6 +2937,13 @@ void weapon(){//装备
 							Sleep(2000);
 							weapon();
 						break;
+						case 23:
+							tool1=3;
+							bag[23]-=1;
+							cout<<"已装备 "<<tool1name[tool1]<<" ！"<<endl;
+							Sleep(2000);
+							weapon();
+						break;
 						case 34:
 							tool1=4;
 							bag[34]-=1;
@@ -2938,6 +2972,13 @@ void weapon(){//装备
 						case 17:
 							tool2=2;
 							bag[17]-=1;
+							cout<<"已装备 "<<tool2name[tool2]<<" ！"<<endl;
+							Sleep(2000);
+							weapon();
+						break;
+						case 24:
+							tool2=3;
+							bag[22]-=1;
 							cout<<"已装备 "<<tool2name[tool2]<<" ！"<<endl;
 							Sleep(2000);
 							weapon();
@@ -3002,6 +3043,9 @@ void build(){//建造
 			build();
 		break;	
 	}
+}
+void enemyattack(){
+	
 }
 int main(){
 	srand(time(0));
