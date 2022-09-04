@@ -31,8 +31,9 @@ bool undeadattack=false;//亡灵入侵
 int diamondapple=0;//钻石苹果 
 int badguy=0,weaponcheck=0,blesscold=0;
 int task1=0;//task1:旅行家 收集10橡木 
+double version=191;
 int choose;//工具 
-long long bag[1000]={};//背包 
+long long bag[1001]={};//背包 
 string itemname[10000]={"",
 "橡木","丛林木","针叶木","绯红菌柄","橡木木板","从林木木板","针叶木木板","绯红木板",
 "工作台","木棍","木剑","木斧","木稿","圆石","石剑","石斧",
@@ -43,6 +44,7 @@ string itemname[10000]={"",
 "钻石胸甲","钻石护腿","钻石靴子","钻石块","钻石苹果","锻造台","远古残骸","下界合金碎片",
 "下界合金锭","下界合金剑","下界合金斧","下界合金稿","下界合金头盔","下界合金胸甲","下界合金护腿","下界合金靴子",
 "黑曜石"};//物品名 
+itemname[1001]="治疗药水",itemname[1002];
 /*物品编号：
 1橡木 2从林木 3针叶木 4绯红菌柄 5橡木木板 6从林木木板 7针叶木木板 8绯红木板  
 9工作台 10木棍 11木剑 12木斧 13木稿 14圆石 15石剑 16石斧 
@@ -52,9 +54,10 @@ string itemname[10000]={"",
 41金护腿 42金靴子 43青金石 44钻石 45钻石剑 46钻石斧 47钻石镐 48钻石头盔
 49钻石胸甲 50钻石护腿 51钻石靴子 52钻石块 53钻石苹果 54锻造台 55远古残骸 56下界合金碎片 
 57下界合金锭 58下界合金剑 59下界合金斧 60下界合金稿 61下界合金头盔 62下界合金胸甲 63下界合金护腿 64下界合金靴子
-65黑曜石 
+65黑曜石
+
+1001治疗药水 
 */
-string potionname[10000]={};
 void say(string word,int time){//说话内容 停顿 
 	for(int i=0;i<=word.length();i++){
 		cout<<word[i];
@@ -143,6 +146,13 @@ void create(){//合成
 	if(bag[8]>=4&&bag[21]>=2&&crafttable) cout<<"编号"<<54<<": 合成 "<<itemname[54]<<"x1 需要 "<<itemname[8]<<"x4,"<<itemname[21]<<"x2"<<endl;
 	if(bag[19]>=1&&bag[55]>=1&&furnace) cout<<"编号"<<56<<": 熔炼"<<itemname[56]<<"x1 需要"<<itemname[19]<<"x1,"<<itemname[55]<<"x1"<<endl;//下界合金碎片
 	if(bag[32]>=4&&bag[56]>=4&&crafttable) cout<<"编号"<<57<<": 熔炼"<<itemname[57]<<"x1 需要"<<itemname[32]<<"x4,"<<itemname[56]<<"x4"<<endl;//下界合金锭 
+	if(bag[45]>=1&&bag[57]>=1&&smithtable) cout<<"编号"<<58<<": 合成"<<itemname[58]<<"x1 需要"<<itemname[45]<<"x1,"<<itemname[57]<<"x1"<<endl;//下界合金剑
+	if(bag[46]>=1&&bag[57]>=1&&smithtable) cout<<"编号"<<59<<": 合成"<<itemname[59]<<"x1 需要"<<itemname[46]<<"x1,"<<itemname[57]<<"x1"<<endl;//下界合金斧 
+	if(bag[47]>=1&&bag[57]>=1&&smithtable) cout<<"编号"<<60<<": 合成"<<itemname[60]<<"x1 需要"<<itemname[47]<<"x1,"<<itemname[57]<<"x1"<<endl;//下界合金稿 
+	if(bag[48]>=1&&bag[57]>=1&&smithtable) cout<<"编号"<<61<<": 合成"<<itemname[61]<<"x1 需要"<<itemname[48]<<"x1,"<<itemname[57]<<"x1"<<endl;//下界合金头盔 
+	if(bag[49]>=1&&bag[57]>=1&&smithtable) cout<<"编号"<<62<<": 合成"<<itemname[62]<<"x1 需要"<<itemname[49]<<"x1,"<<itemname[57]<<"x1"<<endl;//下界合金胸甲 
+	if(bag[50]>=1&&bag[57]>=1&&smithtable) cout<<"编号"<<63<<": 合成"<<itemname[63]<<"x1 需要"<<itemname[50]<<"x1,"<<itemname[57]<<"x1"<<endl;//下界合金护腿 
+	if(bag[51]>=1&&bag[57]>=1&&smithtable) cout<<"编号"<<64<<": 合成"<<itemname[64]<<"x1 需要"<<itemname[51]<<"x1,"<<itemname[57]<<"x1"<<endl;//下界合金靴子 
 	cout<<endl<<"输入0返回"<<endl;
 	cin>>choose;
 	switch(choose){
@@ -1089,6 +1099,97 @@ void create(){//合成
 			Sleep(1000);
 			create();
 		break;
+		case 58://下界合金剑 
+			if(bag[45]<1||bag[57]<1){
+				cout<<"请勿乱输！"<<endl;
+				Sleep(1000);
+				create();
+			}
+			bag[57]-=1;
+			bag[45]-=1;
+			bag[58]+=1;
+			cout<<"合成成功！"<<endl;
+			Sleep(1000);
+			create();
+		break;
+		case 59://下界合金斧 
+			if(bag[46]<1||bag[57]<1){
+				cout<<"请勿乱输！"<<endl;
+				Sleep(1000);
+				create();
+			}
+			bag[57]-=1;
+			bag[46]-=1;
+			bag[59]+=1;
+			cout<<"合成成功！"<<endl;
+			Sleep(1000);
+			create();
+		break;
+		case 60://下界合金稿 
+			if(bag[47]<1||bag[57]<1){
+				cout<<"请勿乱输！"<<endl;
+				Sleep(1000);
+				create();
+			}
+			bag[57]-=1;
+			bag[47]-=1;
+			bag[60]+=1;
+			cout<<"合成成功！"<<endl;
+			Sleep(1000);
+			create();
+		break;
+		case 61://下界合金头盔 
+			if(bag[48]<1||bag[57]<1){
+				cout<<"请勿乱输！"<<endl;
+				Sleep(1000);
+				create();
+			}
+			bag[57]-=1;
+			bag[48]-=1;
+			bag[61]+=1;
+			cout<<"合成成功！"<<endl;
+			Sleep(1000);
+			create();
+		break;
+		case 62://下界合金胸甲 
+			if(bag[49]<1||bag[57]<1){
+				cout<<"请勿乱输！"<<endl;
+				Sleep(1000);
+				create();
+			}
+			bag[57]-=1;
+			bag[49]-=1;
+			bag[62]+=1;
+			cout<<"合成成功！"<<endl;
+			Sleep(1000);
+			create();
+		break;
+		case 63://下界合金护腿 
+			if(bag[50]<1||bag[57]<1){
+				cout<<"请勿乱输！"<<endl;
+				Sleep(1000);
+				create();
+			}
+			bag[57]-=1;
+			bag[50]-=1;
+			bag[63]+=1;
+			cout<<"合成成功！"<<endl;
+			Sleep(1000);
+			create();
+		break;
+		case 64://下界合金靴子 
+			if(bag[51]<1||bag[57]<1){
+				cout<<"请勿乱输！"<<endl;
+				Sleep(1000);
+				create();
+			}
+			bag[57]-=1;
+			bag[51]-=1;
+			bag[64]+=1;
+			cout<<"合成成功！"<<endl;
+			Sleep(1000);
+			create();
+		break;
 	}
 } 
 void fight(string MN,int MH,int MA,int Mrand,int MD,int MS,int dis,int Adis,int xp,int Mmoney){//战斗 敌人名 敌人生命 敌人最小攻击 浮动值 敌人防御 敌人速度 当前距离 敌人攻击距离 经验值 绿宝石 
@@ -1110,7 +1211,8 @@ void fight(string MN,int MH,int MA,int Mrand,int MD,int MS,int dis,int Adis,int 
 				if(dis<=attackdis1){
 					cout<<"你使用 "<<weapon1name[weapon1]<<" 对 "<<MN<<" 进行攻击！"<<endl;
 					Sleep(1000);
-					int damage=attack*(100+rand()%20-rand()%20)/100*(100-MD)/100; //浮动伤害 
+					int a=(attack-MD/5)*(100+rand()%20-rand()%20)/100;
+					int damage=min(a,2); //浮动伤害 
 					cout<<MN<<" 受到了 "<<damage<<" 点伤害！" <<endl;
 					MH-=damage;
 					Sleep(1000);
@@ -1137,7 +1239,8 @@ void fight(string MN,int MH,int MA,int Mrand,int MD,int MS,int dis,int Adis,int 
 					if(dis<=attackdis2){
 						cout<<"你使用 "<<weapon2name[weapon2]<<" 对 "<<MN<<" 进行攻击！"<<endl;
 						Sleep(1000);
-						int damage=attack2*(100+rand()%20-rand()%20)/100*(100-MD)/100; //浮动伤害 
+						int a=(attack2-MD/5)*(100+rand()%20-rand()%20)/100;
+						int damage=min(a,2); //浮动伤害 
 						MH-=damage;
 						cout<<MN<<" 受到了 "<<damage<<" 点伤害！" <<endl;
 						Sleep(1000);
@@ -1154,8 +1257,7 @@ void fight(string MN,int MH,int MA,int Mrand,int MD,int MS,int dis,int Adis,int 
 				}
 				if(weapon2==2){
 					cout<<"你举起盾牌！下次受到伤害时你的防御大幅增加！"<<endl;//盾牌 
-					defend=true;//防御状态 
-					defense+=20;
+					defend=true;//防御状态
 				}
 			break;	
 			case 3:
@@ -1224,11 +1326,12 @@ void fight(string MN,int MH,int MA,int Mrand,int MD,int MS,int dis,int Adis,int 
 			if(dis<=Adis){
 				cout<<MN<<" 对 "<<name<<" 进行攻击！"<<endl; 
 				Sleep(1000);
-				int damage;
-				if(defend){
+				int damage,a;
+				if(defend){ 
 					defend=false;
-					damage=(MA+rand()%Mrand-defense)*(100+rand()%20-rand()%20)*60/10000; 
-				}else damage=damage=(MA+rand()%Mrand-defense)*(100+rand()%20-rand()%20)/100;//浮动伤害 
+					int a=(MA+rand()%Mrand-defense/5)*(100+rand()%20-rand()%20)*60/10000;
+				}else int a=(MA+rand()%Mrand-defense/5)*(100+rand()%20-rand()%20)/100;//浮动伤害 
+				damage=min(a,2);
 				health-=damage;
 				cout<<"你受到了 "<<damage<<" 点伤害！"<<endl;
 				Sleep(1000);
@@ -1266,11 +1369,12 @@ void fight(string MN,int MH,int MA,int Mrand,int MD,int MS,int dis,int Adis,int 
 				}else{//与玩家距离适合，攻击 
 					cout<<MN<<" 对 "<<name<<" 进行攻击！"<<endl;
 					Sleep(1000);
-					int damage;
-					if(defend){
+					int damage,a;
+					if(defend){ 
 						defend=false;
-						damage=(MA+rand()%Mrand-defense)*(100+rand()%20-rand()%20)/100;  
-					}else damage=(MA+rand()%Mrand-defense)*(100+rand()%20-rand()%20)*60/10000;//浮动伤害
+						a=(MA+rand()%Mrand-defense/5)*(100+rand()%20-rand()%20)*60/10000;
+					}else a=(MA+rand()%Mrand-defense/5)*(100+rand()%20-rand()%20)/100;//浮动伤害
+					damage=min(a,2);
 					health-=damage;
 					cout<<"你受到了 "<<damage<<" 点伤害！"<<endl;
 					Sleep(1000);
@@ -1324,7 +1428,7 @@ void enemyattack(){//入侵
 			credit+=2;
 			cout<<"你击败了僵尸后，又一只僵尸向你冲来！！"<<endl;
 			Sleep(2000);
-			fight("僵尸",20,3,2,10,2,5,2,80,1);
+			fight("僵尸",20,3,2,5,2,5,2,80,1);
 			if(dead){
 				dead=false;
 				credit+=2;
@@ -1547,7 +1651,7 @@ void explore(string place){//探索
 			cout<<"0，离开  1，激怒"<<endl;
 			cin>>choose;
 			if(choose==1){
-				fight("铁傀儡",100,8,6,40,2,10,3,500,5);
+				fight("铁傀儡",100,6,4,20,2,10,3,500,5);
 				credit-=20;
 				if(dead){
 					dead=false;
@@ -1836,12 +1940,12 @@ void explore(string place){//探索
 						Sleep(1500);
 						cout<<"一旁的铁傀儡冲来!"<<endl;
 						Sleep(2000);
-						fight("铁傀儡",100,8,6,40,2,10,3,200,5);
+						fight("铁傀儡",100,6,4,20,2,10,3,200,5);
 						if(dead){
 							dead=false;
 							cout<<"获得 2 个铁锭！"<<endl;
 							bag[21]+=2;
-							cout<<"你踹开了铁傀儡，连忙跑走了"<<endl; 
+							cout<<"你连忙跑走了"<<endl; 
 							Sleep(2000);
 						}else{
 							cout<<"你的钱被铁傀儡全部夺走了！"<<endl;
@@ -3232,29 +3336,36 @@ void weapon(){//装备
 					weapon();
 				break; 
 				case 1://卸下头盔 
-					switch(armor1){//
+					switch(armor1){
 						case 0:
 							cout<<"你没有装备头盔！"<<endl;
 							Sleep(1500);
 							weapon();	
 						break;
-						case 3:
+						case 3://金
 							bag[39]+=1;
 							cout<<"已卸下 "<<itemname[39]<<" ！"<<endl; 
 							armor1=0;
 							Sleep(1500);
 							weapon();
 						break;
-						case 4:
+						case 4://铁 
 							bag[25]+=1;
 							cout<<"已卸下 "<<itemname[25]<<" ！"<<endl; 
 							armor1=0;
 							Sleep(1500);
 							weapon();
 						break;
-						case 5:
+						case 5://钻石 
 							bag[48]+=1;
 							cout<<"已卸下 "<<itemname[48]<<" ！"<<endl; 
+							armor1=0;
+							Sleep(1500);
+							weapon();
+						break;
+						case 6://下界合金 
+							bag[61]+=1;
+							cout<<"已卸下 "<<itemname[61]<<" ！"<<endl; 
 							armor1=0;
 							Sleep(1500);
 							weapon();
@@ -3262,30 +3373,37 @@ void weapon(){//装备
 					}
 				break;
 				case 2://卸下胸甲 
-					switch(armor2){//
+					switch(armor2){
 						case 0:
 							cout<<"你没有装备胸甲！"<<endl;
 							Sleep(1500);
 							weapon();	
 						break;
-						case 3:
+						case 3://金
 							bag[40]+=1;
 							cout<<"已卸下 "<<itemname[40]<<" ！"<<endl; 
 							armor2=0;
 							Sleep(1500);
 							weapon();
 						break;
-						case 4:
+						case 4://铁
 							bag[26]+=1;
 							cout<<"已卸下 "<<itemname[26]<<" ！"<<endl; 
 							armor2=0;
 							Sleep(1500);
 							weapon();
 						break;
-						case 5:
+						case 5://钻石
 							bag[49]+=1;
 							cout<<"已卸下 "<<itemname[49]<<" ！"<<endl; 
 							armor2=0;
+							Sleep(1500);
+							weapon();
+						break;
+						case 6://下界合金 
+							bag[62]+=1;
+							cout<<"已卸下 "<<itemname[62]<<" ！"<<endl; 
+							armor1=0;
 							Sleep(1500);
 							weapon();
 						break;
@@ -3298,24 +3416,31 @@ void weapon(){//装备
 							Sleep(1500);
 							weapon();	
 						break;
-						case 3:
+						case 3://金
 							bag[41]+=1;
 							cout<<"已卸下 "<<itemname[41]<<" ！"<<endl; 
 							armor3=0;
 							Sleep(1500);
 							weapon();
 						break;
-						case 4:
+						case 4://铁
 							bag[27]+=1;
 							cout<<"已卸下 "<<itemname[27]<<" ！"<<endl; 
 							armor3=0;
 							Sleep(1500);
 							weapon();
 						break;
-						case 5:
+						case 5://钻石
 							bag[50]+=1;
 							cout<<"已卸下 "<<itemname[50]<<" ！"<<endl; 
 							armor3=0;
+							Sleep(1500);
+							weapon();
+						break;
+						case 6://下界合金 
+							bag[63]+=1;
+							cout<<"已卸下 "<<itemname[63]<<" ！"<<endl; 
+							armor1=0;
 							Sleep(1500);
 							weapon();
 						break;
@@ -3328,24 +3453,31 @@ void weapon(){//装备
 							Sleep(1500);
 							weapon();	
 						break;
-						case 3:
+						case 3://金
 							bag[42]+=1;
 							cout<<"已卸下 "<<itemname[42]<<" ！"<<endl; 
 							armor4=0;
 							Sleep(1500);
 							weapon();
 						break;
-						case 4:
+						case 4://铁
 							bag[28]+=1;
 							cout<<"已卸下 "<<itemname[28]<<" ！"<<endl; 
 							armor4=0;
 							Sleep(1500);
 							weapon();
 						break;
-						case 5:
+						case 5://钻石
 							bag[51]+=1;
 							cout<<"已卸下 "<<itemname[51]<<" ！"<<endl; 
 							armor4=0;
+							Sleep(1500);
+							weapon();
+						break;
+						case 6://下界合金 
+							bag[64]+=1;
+							cout<<"已卸下 "<<itemname[64]<<" ！"<<endl; 
+							armor1=0;
 							Sleep(1500);
 							weapon();
 						break;
@@ -3358,38 +3490,45 @@ void weapon(){//装备
 							Sleep(1500);
 							weapon();	
 						break;
-						case 1:
+						case 1://木
 							bag[11]+=1;
 							cout<<"已卸下 "<<itemname[11]<<" ！"<<endl; 
 							weapon1=0;
 							Sleep(1500);
 							weapon();
 						break;
-						case 2:
+						case 2://石
 							bag[15]+=1;
 							cout<<"已卸下 "<<itemname[15]<<" ！"<<endl; 
 							weapon1=0;
 							Sleep(1500);
 							weapon();
 						break;
-						case 3:
+						case 3://金
 							bag[33]+=1;
 							cout<<"已卸下 "<<itemname[33]<<" ！"<<endl; 
 							weapon1=0;
 							Sleep(1500);
 							weapon();
 						break;
-						case 4:
+						case 4://铁
 							bag[22]+=1;
 							cout<<"已卸下 "<<itemname[22]<<" ！"<<endl; 
 							weapon1=0;
 							Sleep(1500);
 							weapon();
 						break;
-						case 5:
+						case 5://钻石
 							bag[45]+=1;
 							cout<<"已卸下 "<<itemname[45]<<" ！"<<endl; 
 							weapon1=0;
+							Sleep(1500);
+							weapon();
+						break;
+						case 6://下界合金 
+							bag[58]+=1;
+							cout<<"已卸下 "<<itemname[58]<<" ！"<<endl; 
+							armor1=0;
 							Sleep(1500);
 							weapon();
 						break;
@@ -3406,38 +3545,45 @@ void weapon(){//装备
 							Sleep(1500);
 							weapon();
 						break;
-						case 1:
+						case 1://木
 							bag[12]+=1;
 							cout<<"已卸下 "<<itemname[12]<<" ！"<<endl; 
 							tool1=0;
 							Sleep(1500);
 							weapon();
 						break;
-						case 2:
+						case 2://石
 							bag[16]+=1;
 							cout<<"已卸下 "<<itemname[16]<<" ！"<<endl; 
 							tool1=0;
 							Sleep(1500);
 							weapon();
 						break;
-						case 3:
+						case 3://金
 							bag[34]+=1;
 							cout<<"已卸下 "<<itemname[34]<<" ！"<<endl; 
 							tool1=0;
 							Sleep(1500);
 							weapon();
 						break;
-						case 4:
+						case 4://铁
 							bag[23]+=1;
 							cout<<"已卸下 "<<itemname[23]<<" ！"<<endl; 
 							tool1=0;
 							Sleep(1500);
 							weapon();
 						break;
-						case 5:
+						case 5://钻石
 							bag[46]+=1;
 							cout<<"已卸下 "<<itemname[46]<<" ！"<<endl; 
 							tool1=0;
+							Sleep(1500);
+							weapon();
+						break;
+						case 6://下界合金 
+							bag[59]+=1;
+							cout<<"已卸下 "<<itemname[59]<<" ！"<<endl; 
+							armor1=0;
 							Sleep(1500);
 							weapon();
 						break;
@@ -3450,38 +3596,45 @@ void weapon(){//装备
 							Sleep(1500);
 							weapon();
 						break;
-						case 1:
+						case 1://木
 							bag[13]+=1;
 							cout<<"已卸下 "<<itemname[13]<<" ！"<<endl; 
 							tool2=0;
 							Sleep(1500);
 							weapon();
 						break;
-						case 2:
+						case 2://石
 							bag[17]+=1;
 							cout<<"已卸下 "<<itemname[17]<<" ！"<<endl; 
 							tool2=0;
 							Sleep(1500);
 							weapon();
 						break;
-						case 3:
+						case 3://金
 							bag[35]+=1;
 							cout<<"已卸下 "<<itemname[35]<<" ！"<<endl; 
 							tool2=0;
 							Sleep(1500);
 							weapon();
 						break;
-						case 4:
+						case 4://铁
 							bag[24]+=1;
 							cout<<"已卸下 "<<itemname[24]<<" ！"<<endl; 
 							tool2=0;
 							Sleep(1500);
 							weapon();
 						break;
-						case 5:
+						case 5://钻石
 							bag[47]+=1;
 							cout<<"已卸下 "<<itemname[47]<<" ！"<<endl; 
 							tool2=0;
+							Sleep(1500);
+							weapon();
+						break;
+						case 6://下界合金 
+							bag[60]+=1;
+							cout<<"已卸下 "<<itemname[60]<<" ！"<<endl; 
+							armor1=0;
 							Sleep(1500);
 							weapon();
 						break;
@@ -3506,21 +3659,31 @@ void weapon(){//装备
 					}
 					cout<<"请输入要装备的头盔的编号，不要乱输其他！"<<endl;
 					cin>>choose;
-					switch(armor1){//
+					switch(choose){//
 						case 39:
-							armor1=3; 
+							armor1=3;//金
+							bag[39]-=1; 
 							cout<<"已装备 "<<armor1name[armor1]<<" ！"<<endl; 
 							Sleep(1500);
 							weapon();
 						break;
 						case 25:
-							armor1=4;
+							bag[25]-=1;
+							armor1=4;//铁 
 							cout<<"已装备 "<<armor1name[armor1]<<" ！"<<endl; 
 							Sleep(1500);
 							weapon();
 						break;
 						case 48:
-							armor1=5;
+							bag[48]-=1;
+							armor1=5;//钻石 
+							cout<<"已装备 "<<armor1name[armor1]<<" ！"<<endl; 
+							Sleep(1500);
+							weapon();
+						break;
+						case 61:
+							bag[61]-=1;
+							armor1=6;//下界合金 
 							cout<<"已装备 "<<armor1name[armor1]<<" ！"<<endl; 
 							Sleep(1500);
 							weapon();
@@ -3535,21 +3698,31 @@ void weapon(){//装备
 					}
 					cout<<"请输入要装备的胸甲的编号，不要乱输其他！"<<endl;
 					cin>>choose; 
-					switch(armor2){//
-						case 40:
+					switch(choose){//
+						case 40://金 
+							bag[40]-=1;
 							armor2=3; 
 							cout<<"已装备 "<<armor2name[armor2]<<" ！"<<endl; 
 							Sleep(1500);
 							weapon();
 						break;
-						case 26:
+						case 26://铁
+							bag[26]-=1; 
 							armor2=4;
 							cout<<"已装备 "<<armor2name[armor2]<<" ！"<<endl; 
 							Sleep(1500);
 							weapon();
 						break;
-						case 49:
+						case 49://钻石
+							bag[49]-=1; 
 							armor2=5;
+							cout<<"已装备 "<<armor2name[armor2]<<" ！"<<endl; 
+							Sleep(1500);
+							weapon();
+						break;
+						case 62:
+							armor1=6;//下界合金
+							bag[62]-=1; 
 							cout<<"已装备 "<<armor2name[armor2]<<" ！"<<endl; 
 							Sleep(1500);
 							weapon();
@@ -3564,21 +3737,31 @@ void weapon(){//装备
 					}
 					cout<<"请输入要装备的护腿的编号，不要乱输其他！"<<endl;
 					cin>>choose;
-					switch(armor3){//
-						case 41:
+					switch(choose){//
+						case 41://金 
+							bag[41]-=1;
 							armor3=3; 
 							cout<<"已装备 "<<armor3name[armor3]<<" ！"<<endl; 
 							Sleep(1500);
 							weapon();
 						break;
-						case 27:
+						case 27://铁 
+							bag[27]-=1;
 							armor3=4;
 							cout<<"已装备 "<<armor3name[armor3]<<" ！"<<endl; 
 							Sleep(1500);
 							weapon();
 						break;
-						case 50:
+						case 50://钻石
+							bag[50]-=1; 
 							armor3=5;
+							cout<<"已装备 "<<armor3name[armor3]<<" ！"<<endl; 
+							Sleep(1500);
+							weapon();
+						break;
+						case 63:
+							bag[63]-=1;
+							armor1=6;//下界合金 
 							cout<<"已装备 "<<armor3name[armor3]<<" ！"<<endl; 
 							Sleep(1500);
 							weapon();
@@ -3593,21 +3776,31 @@ void weapon(){//装备
 					}
 					cout<<"请输入要装备的靴子的编号，不要乱输其他！"<<endl;
 					cin>>choose;
-					switch(armor4){//
-						case 42:
+					switch(choose){//
+						case 42://金 
+							bag[42]-=1;
 							armor4=3; 
 							cout<<"已装备 "<<armor4name[armor4]<<" ！"<<endl; 
 							Sleep(1500);
 							weapon();
 						break;
-						case 28:
+						case 28://铁
+							bag[28]-=1; 
 							armor4=4;
 							cout<<"已装备 "<<armor4name[armor4]<<" ！"<<endl; 
 							Sleep(1500);
 							weapon();
 						break;
-						case 51:
+						case 51://钻石
+							bag[51]-=1; 
 							armor4=5;
+							cout<<"已装备 "<<armor4name[armor4]<<" ！"<<endl; 
+							Sleep(1500);
+							weapon();
+						break;
+						case 64:
+							bag[64]-=1;
+							armor1=6;//下界合金 
 							cout<<"已装备 "<<armor4name[armor4]<<" ！"<<endl; 
 							Sleep(1500);
 							weapon();
@@ -3623,39 +3816,45 @@ void weapon(){//装备
 					cout<<"请输入要装备的剑的编号，不要乱输其他！"<<endl;
 					cin>>choose; 
 					switch(choose){
-						case 11:
+						case 11://木 
 							weapon1=1;
 							bag[11]-=1;
 							cout<<"已装备 "<<weapon1name[weapon1]<<" ！"<<endl;
 							Sleep(2000);
 							weapon();
 						break;
-						case 15:
+						case 15://石 
 							weapon1=2;
 							bag[15]-=1;
 							cout<<"已装备 "<<weapon1name[weapon1]<<" ！"<<endl;
 							Sleep(2000);
 							weapon();
 						break;
-						case 22:
-							weapon1=3;
+						case 22://铁 
+							weapon1=4;
 							bag[22]-=1;
 							cout<<"已装备 "<<weapon1name[weapon1]<<" ！"<<endl;
 							Sleep(2000);
 							weapon();
 						break;
-						case 33:
-							weapon1=4;
+						case 33://金 
+							weapon1=3;
 							bag[33]-=1;
 							cout<<"已装备 "<<weapon1name[weapon1]<<" ！"<<endl;
 							Sleep(2000);
 							weapon();
 						break;
-						case 45:
+						case 45://钻石 
 							weapon1=5;
 							bag[45]-=1;
 							cout<<"已装备 "<<weapon1name[weapon1]<<" ！"<<endl;
 							Sleep(2000);
+							weapon();
+						break;
+						case 58:
+							weapon1=6;//下界合金 
+							cout<<"已装备 "<<weapon1name[weapon1]<<" ！"<<endl; 
+							Sleep(1500);
 							weapon();
 						break;	
 					}
@@ -3671,14 +3870,14 @@ void weapon(){//装备
 					cout<<"请输入要装备的斧子的编号，不要乱输其他！"<<endl;
 					cin>>choose; 
 					switch(choose){
-						case 12:
+						case 12://木 
 							tool1=1;
 							bag[12]-=1;
 							cout<<"已装备 "<<tool1name[tool1]<<" ！"<<endl;
 							Sleep(2000);
 							weapon();
 						break;
-						case 16:
+						case 16://石 
 							tool1=2;
 							bag[16]-=1;
 							cout<<"已装备 "<<tool1name[tool1]<<" ！"<<endl;
@@ -3686,24 +3885,30 @@ void weapon(){//装备
 							weapon();
 						break;
 						case 23:
-							tool1=3;
+							tool1=4;//铁 
 							bag[23]-=1;
 							cout<<"已装备 "<<tool1name[tool1]<<" ！"<<endl;
 							Sleep(2000);
 							weapon();
 						break;
-						case 34:
-							tool1=4;
+						case 34://金 
+							tool1=3;
 							bag[34]-=1;
 							cout<<"已装备 "<<tool1name[tool1]<<" ！"<<endl;
 							Sleep(2000);
 							weapon();
 						break;
-						case 46:
+						case 46://钻石 
 							tool1=5;
 							bag[46]-=1;
 							cout<<"已装备 "<<tool1name[tool1]<<" ！"<<endl;
 							Sleep(2000);
+							weapon();
+						break;
+						case 59:
+							tool1=6;//下界合金 
+							cout<<"已装备 "<<tool1name[tool1]<<" ！"<<endl; 
+							Sleep(1500);
 							weapon();
 						break;	
 					}
@@ -3717,41 +3922,47 @@ void weapon(){//装备
 					cout<<"请输入要装备的稿子的编号，不要乱输其他！"<<endl;
 					cin>>choose; 
 					switch(choose){
-						case 13:
+						case 13://木 
 							tool2=1;
 							bag[13]-=1;
 							cout<<"已装备 "<<tool2name[tool2]<<" ！"<<endl;
 							Sleep(2000);
 							weapon();
 						break;
-						case 17:
+						case 17://石 
 							tool2=2;
 							bag[17]-=1;
 							cout<<"已装备 "<<tool2name[tool2]<<" ！"<<endl;
 							Sleep(2000);
 							weapon();
 						break;
-						case 24:
+						case 24://铁 
 							tool2=4;
 							bag[24]-=1;
 							cout<<"已装备 "<<tool2name[tool2]<<" ！"<<endl;
 							Sleep(2000);
 							weapon();
 						break;
-						case 35:
+						case 35://金 
 							tool2=3;
 							bag[35]-=1;
 							cout<<"已装备 "<<tool2name[tool2]<<" ！"<<endl;
 							Sleep(2000);
 							weapon();
 						break;
-						case 47:
+						case 47://钻石 
 							tool2=5;
 							bag[47]-=1;
 							cout<<"已装备 "<<tool2name[tool2]<<" ！"<<endl;
 							Sleep(2000);
 							weapon();
 						break;	
+						case 60:
+							tool2=6;//下界合金 
+							cout<<"已装备 "<<tool2name[tool2]<<" ！"<<endl; 
+							Sleep(1500);
+							weapon();
+						break;
 					}
 				break;
 			}
@@ -3844,10 +4055,14 @@ void build(){//建造
 }
 void update(){//更新日志 
 	system("cls");
+	cout<<"1.9.1："<<endl;
+	cout<<"新增存读档功能！！！"<<endl;
+	cout<<endl;
 	cout<<"1.9.0:"<<endl;
 	cout<<"增加了黑曜石和下界合金系列物品，增加地狱传送门"<<endl;
 	cout<<"增加大量和下界合金有关的合成配方"<<endl;
 	cout<<"增加商店（1.9.0了你才搞商店？？？）"<<endl; 
+	cout<<endl;
 	cout<<"1.8.4:"<<endl;
 	cout<<"修复了装备的bug"<<endl;
 	cout<<"优化文本显示（say）"<<endl; 
@@ -3939,12 +4154,118 @@ void update(){//更新日志
 	cout<<"输入任意键继续..."<<endl; 
 	getch(); 
 }
+void read(){//读档 
+	system("cls");
+	int ver=191;
+	cout<<"你确定要读取存档吗？若你没有保存过则无法读取。读取会覆盖你当前的游戏进度。"<<endl;
+	cout<<"0，返回  1，确定"<<endl;
+	cin>>choose;
+	if(choose==0) return;
+	cout<<"读取存档中..."<<endl;
+	Sleep(5000); 
+	ifstream fin("你的MINECRAFT存档.txt"); 
+	fin>>name>>place>>maxhealth>>health>>attack>>defense>>money>>experience>>level>>speed;
+    fin>>credit>>weapon1>>weapon2>>tool1>>tool2>>attackdis1>>attackdis2>>armor1>>armor2>>armor3>>armor4;
+    fin>>nether>>ender>>dead>>defend>>blessing>>crafttable>>furnace>>smithtable;
+    fin>>undeadattack>>diamondapple>>badguy>>weaponcheck>>blesscold;
+    fin>>task1;
+    for(int i=0;i<100;i++){
+        fin>>bag[i];
+    }
+     for(int i=1000;i<=1010;i++){
+    	fin>>bag[i];
+	}
+    fin>>version;
+    if(ver!=version){
+    	cout<<"警告：你正在读取其他版本的存档！可能会出现漏洞，后果自负！"<<endl;
+    	Sleep(1000);
+		cout<<"已读取 "<<name<<" 的存档！"<<endl;
+		Sleep(2000);
+		return;
+	}
+    cout<<"读取存档成功！"<<endl;
+    cout<<"已读取 "<<name<<" 的存档！"<<endl;
+    Sleep(2000);
+    return;
+}
+void save(){//存档 
+	system("cls");
+	cout<<"你确定要保存进度吗？这将覆盖你先前的存档。我们将会创造一个文件以保存数据。"<<endl;
+	cout<<"但我们建议保存存档以确保你的游玩进度不会丢失。"<<endl;
+	cout<<"0，返回  1，确定"<<endl;
+	cin>>choose;
+	if(choose==0) return;
+	cout<<"保存中..."<<endl;
+	Sleep(3000); 
+	ofstream outfile("你的MINECRAFT存档.txt",ios::binary|ios::app|ios::in|ios::out|ios::trunc);
+    outfile<<name<<" "<<" "<<place<<" "<<maxhealth<<" "<<health<<" "<<attack<<" "<<defense<<" "<<money<<" "<<experience<<" "<<level<<" "<<speed<<" ";
+    outfile<<credit<<" "<<weapon1<<" "<<weapon2<<" "<<tool1<<" "<<tool2<<" "<<attackdis1<<" "<<attackdis2<<" "<<armor1<<" "<<armor2<<" "<<armor3<<" "<<armor4<<" ";
+    outfile<<nether<<" "<<ender<<" "<<dead<<" "<<defend<<" "<<blessing<<" "<<crafttable<<" "<<furnace<<" "<<smithtable<<" ";
+    outfile<<undeadattack<<" "<<diamondapple<<" "<<badguy<<" "<<weaponcheck<<" "<<blesscold<<" ";
+    outfile<<task1<<endl;
+    for(int i=0;i<100;i++){
+        outfile<<bag[i]<<" ";
+    }
+    for(int i=1000;i<=1010;i++){
+    	outfile<<bag[i]<<" ";
+	}
+    outfile<<version<<endl;
+    outfile.close();
+    cout<<"保存成功！"<<endl;
+	Sleep(2000); 
+    return;
+}
+void test(){//调试 
+	system("cls");
+	cout<<"0，返回  1，修改生命  2，修改攻击  3，修改防御  4，修改速度  5，修改金钱  6，修改等级  7，修改背包  8，修改信誉"<<endl;
+	cin>>choose;
+	switch(choose){
+		case 0:
+			return;
+		break;	
+		case 1:
+			cin>>choose;
+			health=choose;
+			maxhealth=health;
+		break;
+		case 2:
+			cin>>choose;
+			attack=choose;
+		break;
+		case 3:
+			cin>>choose;
+			defense=choose;
+		break;
+		case 4:
+			cin>>choose;
+			speed=choose;
+		break;
+		case 5:
+			cin>>choose;
+			money=choose;
+		break;
+		case 6:
+			cin>>choose;
+			level=choose;
+		break;
+		case 7:
+			int tool; 
+			cin>>choose>>tool;
+			bag[choose]=tool;
+		break;
+		case 8:
+			cin>>choose;
+			credit=choose;
+		break;	
+		return;		
+	}
+}
 int main(){ 
 	srand(time(0));
 	cout<<"  	Welcome to MINECRAFT ! "<<endl;
 	cout<<" 	 欢迎来到我的世界！    "<<endl<<endl;
 	cout<<" 	 Made By Chenxuanhan   "<<endl<<endl;
-	cout<<"Version：1.9.0"<<endl; 
+	cout<<"Version：1.9.1"<<endl; 
 	Sleep(1000);
 	cout<<endl<<endl<<"按 1 开始..."<<endl;
 	cin>>choose;
@@ -4002,6 +4323,7 @@ int main(){
 	}
 	while(1){
 		attack=basicattack+weapon1attack[weapon1];
+		defense=armor1defense[armor1]+armor2defense[armor2]+armor3defense[armor3]+armor4defense[armor4];
 		system("cls");
 		cout<<"玩家名："<<name<<endl;
 		cout<<"你现在位于"<<place<<"."<<endl;
@@ -4015,7 +4337,7 @@ int main(){
 		cout<<"-----------------------------------" <<endl; 
 		cout<<"你要做什么？"<<endl;
 		cout<<"1，冒险  2，商店  3，背包  4，挖矿  5，砍树  6，前进  7，合成  8，建造  9，装备"<<endl;
-		cout<<"1001，查看更新日志"<<endl; 
+		cout<<"1001，查看更新日志  1002，读取存档  1003，保存进度  1004，调试"<<endl<<endl; 
 		cin>>choose;
 		fflush(stdin);
 		if(!cin.fail()){
@@ -4055,9 +4377,19 @@ int main(){
 				case 9://装备
 					weapon();
 				break;
-				case 1001:
+				case 1001://更新日志 
 					update();
-				break;	
+				break;
+				case 1002://读档 
+					read();
+				break;
+				case 1003://存档 
+					save();
+				break;
+				case 1004:
+					cout<<"输入密码："<<endl;
+					cin>>choose;
+					if(choose==1919810) test();	
 				default:
 					break;
 				break; 
